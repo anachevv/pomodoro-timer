@@ -27,13 +27,22 @@ class App(tk.Tk):
         self.time_label = tk.Label(bg='pink', fg='white', font=('calibri', 60))
 
         # Buttons
-        tk.Button(self, text='Pomodoro', bg='pink', activeforeground='crimson', activebackground='lightgrey',
-                  font=('ArialRounded', 16), command=self.pomodoro_time).place(x=40, y=100)
-        tk.Button(self, text='Long Break', bg='pink', activeforeground='crimson', activebackground='lightgrey',
-                  font=('ArialRounded', 16), command=self.long_time).place(x=230, y=100)
-        tk.Button(self, text='Short Break', bg='pink', activeforeground='crimson', activebackground='lightgrey',
-                  font=('ArialRounded', 16), command=self.short_time).place(x=430, y=100)
-        tk.Button(self, text='STOP', bg='white', activebackground='lightgrey', activeforeground='crimson',
+        self.pomodoro = tk.Button(self, text='Pomodoro', bg='pink', activebackground='lightgrey',
+                                  font=('ArialRounded', 16), command=self.pomodoro_time)
+        self.pomodoro.place(x=40, y=100)
+        self.new_pomodoro = None
+
+        self.long_break = tk.Button(self, text='Long Break', bg='pink', activeforeground='crimson',
+                                    font=('ArialRounded', 16), command=self.long_time)
+        self.long_break.place(x=230, y=100)
+        self.new_long_break = None
+
+        self.short_break = tk.Button(self, text='Short Break', bg='pink', activeforeground='crimson',
+                                     font=('ArialRounded', 16), command=self.short_time)
+        self.short_break.place(x=430, y=100)
+        self.new_short_break = None
+
+        tk.Button(self, text='STOP', bg='white', activeforeground='crimson',
                   fg='#D95550', padx=50, pady=0, font=('ArialRounded', 22), command=self.stop).place(x=190, y=300)
 
         self.stop_loop = False
@@ -66,6 +75,18 @@ class App(tk.Tk):
         self.short_label.forget()
         total_time = 25 * 60
 
+        self.long_break = tk.Button(self, text='Long Break', bg='pink', activeforeground='crimson',
+                                    font=('ArialRounded', 16), command=self.long_time)
+        self.long_break.place(x=230, y=100)
+
+        self.short_break = tk.Button(self, text='Short Break', bg='pink', activeforeground='crimson',
+                                     font=('ArialRounded', 16), command=self.short_time)
+        self.short_break.place(x=430, y=100)
+
+        self.new_pomodoro = tk.Button(self, text='Pomodoro', bg='crimson',
+                                      font=('ArialRounded', 16), command=self.pomodoro_time)
+        self.new_pomodoro.place(x=40, y=100)
+
         self.start(total_time)
 
     def long_time(self):
@@ -73,12 +94,36 @@ class App(tk.Tk):
         self.short_label.forget()
         total_time = 15 * 60
 
+        self.pomodoro = tk.Button(self, text='Pomodoro', bg='pink', activeforeground='crimson',
+                                  font=('ArialRounded', 16), command=self.pomodoro_time)
+        self.pomodoro.place(x=40, y=100)
+
+        self.short_break = tk.Button(self, text='Short Break', bg='pink', activeforeground='crimson',
+                                     font=('ArialRounded', 16), command=self.short_time)
+        self.short_break.place(x=430, y=100)
+
+        self.new_long_break = tk.Button(self, text='Long Break', bg='crimson',
+                                        font=('ArialRounded', 16), command=self.long_time)
+        self.new_long_break.place(x=230, y=100)
+
         self.start(total_time)
 
     def short_time(self):
         self.pomodoro_label.forget()
         self.long_label.forget()
         total_time = 5 * 60
+
+        self.pomodoro = tk.Button(self, text='Pomodoro', bg='pink', activeforeground='crimson',
+                                  font=('ArialRounded', 16), command=self.pomodoro_time)
+        self.pomodoro.place(x=40, y=100)
+
+        self.long_break = tk.Button(self, text='Long Break', bg='pink', activeforeground='crimson',
+                                    font=('ArialRounded', 16), command=self.long_time)
+        self.long_break.place(x=230, y=100)
+
+        self.new_short_break = tk.Button(self, text='Short Break', bg='crimson', font=('ArialRounded', 16),
+                                         command=self.short_time)
+        self.new_short_break.place(x=430, y=100)
 
         self.start(total_time)
 
