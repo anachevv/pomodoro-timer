@@ -1,5 +1,7 @@
 import threading
 import tkinter as tk
+from time import sleep
+from tkinter import messagebox
 
 
 class App(tk.Tk):
@@ -44,16 +46,20 @@ class App(tk.Tk):
         self.stop_loop = False
 
         while total_time > 0 and not self.stop_loop:
-            total_time -= 1
             mins, secs = divmod(total_time, 60)
-            self.update()
-            self.after(1000)
 
             self.time_label.pack(anchor='center', pady=100)
             self.time_label.config(text=f"{mins:02d}:{secs:02d}", bg='pink', fg='white', font=('ArialRounded', 60))
 
+            self.update()
+            sleep(1)
+            total_time -= 1
+
         if not self.stop_loop:
-            self.time_label.config(text="Time: 00:00", bg='pink', fg='white', font=('ArialRounded', 60))
+            self.time_label.config(text="00:00", bg='pink', fg='white', font=('ArialRounded', 60))
+
+    def stop(self):
+        self.stop_loop = True
 
     def pomodoro_time(self):
         self.long_label.forget()
@@ -76,10 +82,12 @@ class App(tk.Tk):
 
         self.start(total_time)
 
-    def stop(self):
-        self.stop_loop = True
+    def on_closing(self):
+        if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            self.destroy()
 
 
 if __name__ == "__main__":
     app = App()
+    app.protocol("WM_DELETE_WINDOW", app.on_closing)
     app.mainloop()
